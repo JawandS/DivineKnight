@@ -1,3 +1,3 @@
 # DivineKnight
 
-A game developed for CS final project 2019-2020
+A game developed for the Foundations CS final project 2019-2020, at TJHSST
