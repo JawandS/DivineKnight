@@ -1,43 +1,32 @@
 public class Monster
 {
-   //pseudocode
+   //General pseudocode
    /* int armor;
       int item;
       */
-}
-
-class Attacks
-{
-   //pseudocode
+   //Attacks pseudocode
    /* int itemNumber;
       int damage;
       int range;
       */
+   //attack(itemNumber, damage, range);
+   //Health pseudocode
+   /* 
+      int health;
+      */
+   //Boss pseudocode
+   /* 
+      boolean boss;
+      */
+
 }
 class Value
 {
-   class Gear
-   {
    //pseudocode
    /* 
       int numitems;
       double probability;
       int value;
       int gold;
-      */
-   }
-}
-class Health
-{
-   //pseudocode
-   /* 
-      int health;
-      */
-}
-class Boss
-{
-   //pseudocode
-   /* 
-      boolean boss;
       */
 }
