@@ -23,12 +23,6 @@ class Value
       int numitems;
       double probability;
       int value;
-       */
-   }
-   class Gold
-   {
-   //pseudocode
-   /* 
       int gold;
       */
    }
