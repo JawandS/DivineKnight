@@ -1,13 +1,13 @@
 public class LChestplate extends Gear{
 public LChestplate(){
-super(6, 3, 5.4);
+super(6, 3, 5);
 }
 }
 
 class IChestplate extends Gear{
 
 public IChestplate(){
-super(7, 6, 16.2);
+super(7, 6, 16);
 }
 
 }
@@ -15,7 +15,7 @@ super(7, 6, 16.2);
 class CChestplate extends Gear{
 
 public CChestplate(){
-super(8, 12, 48.6);
+super(8, 12, 49);
 }
 
 }
@@ -23,7 +23,7 @@ super(8, 12, 48.6);
 class TChestplate extends Gear{
 
 public TChestplate(){
-super(9, 24, 145.8);
+super(9, 24, 146);
 }
 
 }

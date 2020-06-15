@@ -3,17 +3,21 @@ public class Gear{
 //vars
 int in;
 int iv;
-double id;
+int id;
 
 //constructor 1, for various subclass
-public Gear(int in, int iv, double id){
+public Gear(int in, int iv, int id){
 this.in = in;
 this.iv = iv;
 this.id = id;
 }
 
 //constructor 2, for the knight class
-public Gear(Gear g){}
+public Gear(Gear g){
+this.in = g.in;
+this.iv = g.iv;
+this.id = g.id;
+}
 
 public String toString(){
 

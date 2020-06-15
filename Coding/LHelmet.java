@@ -1,13 +1,13 @@
 public class LHelmet extends Gear{
 public LHelmet(){
-super(1, 1, 1.8);
+super(1, 1, 2);
 }
 }
 
 class IHelmet extends Gear{
 
 public IHelmet(){
-super(2, 2, 5.4);
+super(2, 2, 5);
 }
 
 }
@@ -15,7 +15,7 @@ super(2, 2, 5.4);
 class CHelmet extends Gear{
 
 public CHelmet(){
-super(3, 4, 16.2);
+super(3, 4, 16);
 }
 
 }
@@ -23,7 +23,7 @@ super(3, 4, 16.2);
 class THelmet extends Gear{
 
 public THelmet(){
-super(4, 8, 48.6);
+super(4, 8, 49);
 }
 
 }
