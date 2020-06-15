@@ -44,6 +44,23 @@ exp = 0;
 
 //methods
 
+public void kAttack(boolean special, int name, Knight k, Monster m){//the method for attacks, id for specific special attack
+
+if (special==false){ 
+int damage = k.getWeapon(2) - m.getDefense();
+
+if (damage > 0)
+m.setHealth(m.getHealth() - damage);
+}
+
+if(special == false){
+
+//COMPLETE SPECIAL ATTACKS AS NEEDED 
+}
+
+
+}
+ 
 public int getDefense(Knight k){//return knight totaled defense
 int def = k.getHelmet(2)+k.getChestplate(2)+k.getBoots(2)+k.getGauntlets(2);
 return def;
