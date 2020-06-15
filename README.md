@@ -5,11 +5,8 @@ A game developed for the Foundations CS final project 2019-2020, at TJHSST
 
 
 5 Tiers of Gear
-Leather/Wood
+Leather - Wood for weapons
 Iron
 Crystal
 Titan Steel
 Elementium
-
-Value doubles each time and triples for Elementium
-Defnse triples each time and quintuples for Elementium 
