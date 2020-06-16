@@ -2,7 +2,7 @@ public class Monster
 {
 //other value
    int loc;
-   int id = 100;
+   int id;
 
 //main attributes
    int health;
@@ -10,14 +10,20 @@ public class Monster
    int defense;
  
  //constructor
-   public Monster(int h, int a, int d){
+   public Monster(int h, int a, int d, int id){
       health = h;
       attack = a;
       defense = d;
+      this.id = id;
    }
+   
  //methods
- //MONSTER ATTACK
- //IF BOSS ADD SPEICL ATTACK (TO TRIGGER EVERY SO OFTEN)
+   public void mAttack(Knight k, Monster m){//Attack method for monster
+   int damage = m.getAttack() - k.getDefense(k);
+      
+         if (damage > 0)
+            k.setHealth(k.getHealth() - damage);
+   }
  
  //getters
    public int getHealth(){
@@ -34,22 +40,22 @@ public class Monster
    
    //setters
    public void setHealth(int i){
-   health = i;
+      health = i;
    }
    
    public void setAttack(int i){
-   defense = i;
+      defense = i;
    }
    
    public void setDefense(int i){
-   defense = i;
+      defense = i;
    }
-   
+}
     
   
  
  
- 
+ /*
    //General pseudocode
    /* int armor;
       int item;
@@ -67,16 +73,17 @@ public class Monster
    //Boss pseudocode
    /* 
       boolean boss;
+      }
       */
 
-}
-class Value
+
+/*class Value
 {
    //pseudocode
-   /* 
+    
       int numitems;
       double probability;
       int value;
       int gold;
+      }
       */
-}

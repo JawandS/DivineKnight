@@ -7,11 +7,32 @@ public class DKdriver{
 
    public static void main(String[] args){
    
-     
-     
+      
+
    
    }
 }
+
+/*TEST 3
+LHelmet h = new LHelmet(); 
+      LChestplate c = new LChestplate();
+      LBoots b = new LBoots();
+      LGauntlets g = new LGauntlets();
+      WWeapon w = new WWeapon();
+      
+      RatPack r = new RatPack();
+      
+      Knight k = new Knight (h, c, g, b, w);
+      
+      k.kAttack(false, 0, k, r);
+      System.out.println("Knight Attacked, Monster health:" + r.getHealth()); //Monster health
+      
+      r.mAttack(k, r);
+      System.out.println("Monster Attacked, Knight health:" + k.getHealth()); //Knight health
+      
+      RESULT: works, adjust value to realist settigns
+*/
+
 
 /*LIST OF BASIC GEAR
 LHelmet h = new LHelmet(); 
