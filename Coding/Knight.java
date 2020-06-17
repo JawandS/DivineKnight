@@ -1,11 +1,17 @@
-
+import java.awt.event.*;
+import javax.swing.*;  //to access JFrame and JPanel
+import java.awt.*;     //to access Graphics and Color
+import java.awt.event.*;//to access Listeners
+import java.awt.geom.*; //to access GeneralPath
+import javax.swing.Timer;
 
 public class Knight{
 
 //variables
    int itemNumber = 0;
-   int xPos; //Change based on size of the frame
-   int yPos; //read above note
+   private double dX, dY;
+   private ImageIcon mImage;
+   private int w, h, l, t; //width and height, left and top of the knight
 
 //items
    private Gear helmet;
@@ -24,7 +30,7 @@ public class Knight{
    private int exp; 
 
 //constructor 
-   public Knight(Gear g1, Gear g2, Gear g3, Gear g4, Gear g5){
+   public Knight(Gear g1, Gear g2, Gear g3, Gear g4, Gear g5, int w, int h, int l, int t){
    
       helmet = new Gear(g1);
       chestplate = new Gear(g2);
@@ -38,6 +44,12 @@ public class Knight{
    
       gold = 0;
       exp = 0;
+      
+      this.w = w;
+      this.h = h;
+      this.l = l;
+      this.t = t;
+      mImage = new ImageIcon("0.jpg");
    }
 
 //methods
@@ -97,7 +109,7 @@ public class Knight{
    public void kSpell(int name, Knight k, Monster m){
    
       if(name == 1){//Divine Thunder (100 points damage, ignore defense)
-        if((k.getMana() - 200) > 0){//costs 200 mana
+         if((k.getMana() - 200) > 0){//costs 200 mana
             k.setMana((k.getMana() - 200));
             m.setHealth(m.getHealth()-100);
          }
@@ -157,6 +169,10 @@ public class Knight{
 
    public void setExp(int i){
       exp = i;
+   }
+   
+   public void setLeft(int i){
+      l = i;
    }
 
 
@@ -225,29 +241,71 @@ public class Knight{
    public int GetExp(){
       return exp;
    }
-
-
-//public void draw(Graphics g){
-
-//timer in the gui panel
-//al of the other pieces of items will be based of the pso of the knight
-//create ticks in the listnere class
-//action performed in the lsitener
-//key listener (if left go left)
-//get image from fro item nubmer
-//make the backgroudn move not the knight
-
-//make the monster move, but when the knight is moving everyhtign else moves 
-//}
-
-
+   
+   public int getLeft(){
+      return l;
+   }
+   
+   //ANIMATION METHODS
+    
+   public void draw(Graphics g){
+   
+      if(getImage()!=null){                            //if the sprite has an image
+         g.drawImage(getImage().getImage(),(int) l,(int) t, w, h, null); 
+      } else {
+         System.out.println("Oops, image not found (Knight class)");
+      }
+   
+   //timer in the gui panel
+   //al of the other pieces of items will be based of the pso of the knight
+   //create ticks in the listnere class
+   //action performed in the lsitener
+   //key listener (if left go left)
+   //get image from fro item nubmer
+   //make the backgroudn move not the knight
+   
+   //make the monster move, but when the knight is moving everyhtign else moves 
+   }
+   
+   public ImageIcon getImage(){
+      return mImage;
+   }
+   
+   public void setImage(ImageIcon mImage){
+      this.mImage=mImage;
+   }
+   public double getdX(){
+      return dX;
+   }
+   
+   public void setdX(double dX){
+      this.dX=dX;
+   }
+   
+   public double getdY(){
+      return dY;
+   }
+   
+   public void setdY(double dY){
+      this.dY=dY;
+   }
+   
 }
+
 
 /* NOTES
 
 Has: Armor, weapon, attributes, gold, and exp (along with there getters and setter)
 
 
+
+public void update(){        
+   left += dX;
+   right += dX;
+   top += dY;
+   bottom += dY;
+   
+   this.offset(dX,dY);
 
 
 
