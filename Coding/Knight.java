@@ -246,6 +246,10 @@ public class Knight{
       return l;
    }
    
+   public int getRight(){
+   return l + w;
+   }
+   
    //ANIMATION METHODS
     
    public void draw(Graphics g){

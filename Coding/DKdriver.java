@@ -31,6 +31,7 @@ public class DKdriver{
 class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
    
    //necessary vars
+   int time = 0;
    //Gear
    LHelmet h = new LHelmet(); 
    LChestplate c = new LChestplate();
@@ -41,16 +42,22 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
    int sW = (int) screenSize.getWidth(); //width
    int sH = (int) screenSize.getHeight(); //height
+   //Monsters
+   RatPack rp = new RatPack(sW, sH);
+   GiantSpider gs = new GiantSpider(sW, sH);
+   SkeletonWarrior sw = new SkeletonWarrior(sW, sH);
+   ElderLich el = new ElderLich(sW, sH);
+   MallumDraco md = new MallumDraco (sW, sH);
    //MC
    Knight k = new Knight (h, c, g, b, w, (int)(.2*sW), (int)(.55*sH), (int)(.05 * sW), (int)(.45*sH));
    //Timer                                   width             height               x                 y        
    private Timer timer;
-
-   
+   //level
+   int level = 1;   
    
    public DKPanel(){
    //setup
-      timer = new Timer(25, new TimerListener());
+      timer = new Timer(7, new TimerListener());
    
       timer.start();
       setFocusable(true);             
@@ -63,12 +70,18 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
          new KeyAdapter(){
             public void keyPressed(KeyEvent event) {
                if(event.getKeyCode()==KeyEvent.VK_LEFT){//left arrow
-                  k.setLeft(k.getLeft() - 10);
+                  if(k.getLeft() > 10)
+                  k.setLeft(k.getLeft() - 7);
                } 
                if(event.getKeyCode()==KeyEvent.VK_RIGHT){//right arrow
-                  k.setLeft(k.getLeft() + 10);
+                  if(k.getLeft() < (sW-400) && (rp.getLeft()-k.getRight()) >= 50)
+                  k.setLeft(k.getLeft() + 9);
                } 
-               if(event.getKeyCode()==KeyEvent.VK_1){}
+               if(event.getKeyCode()==KeyEvent.VK_1){
+               if(level==1 && (k.getRight()-rp.getLeft()) <= 50){
+               k.kAttack(false, 0, k, rp);
+               }
+               }
                if(event.getKeyCode()==KeyEvent.VK_2){}
                if(event.getKeyCode()==KeyEvent.VK_3){}   
             }
@@ -91,10 +104,39 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
 //Paint component
    public void paintComponent(Graphics g){
       Graphics2D g2D = (Graphics2D)g;
+
+      if(level == 1){//level 1
+      //background (top)
+      Image pic; 
+      ImageIcon obj = new ImageIcon("-100.jpg");
+      pic = obj.getImage();
+      g.drawImage(pic,0, 0,sW,(int)(.6*sH), null);
+      //background (bottom)
       Color c = new Color(0, 0, 0);
       g.setColor(c);
       g.fillRect(0, (int)(.45*sH), (int)(sW), (int)(.55*sH));  
+      //knight
       k.draw(g);
+      //monster
+      rp.draw(g);
+      }
+      
+      if(level == 2){//level 2
+      //background (top)
+      Image pic; 
+      ImageIcon obj = new ImageIcon("-101.jpg");//change background
+      pic = obj.getImage();
+      g.drawImage(pic,0, 0,sW,(int)(.6*sH), null);
+      //background (bottom)
+      Color c = new Color(0, 0, 0);
+      g.setColor(c);
+      g.fillRect(0, (int)(.45*sH), (int)(sW), (int)(.55*sH));  
+      //knight
+      k.draw(g);
+      //monster
+      rp.draw(g);//change monster
+      }
+
    }
    
 //animation (timer)
@@ -102,6 +144,25 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
    class TimerListener implements ActionListener{
       public void actionPerformed(ActionEvent e){
          repaint();
+         time++;
+         
+         if(level == 1){//level 1 animations
+         
+         if(rp.getHealth() <= 0){//death sequence for monster
+         level++;
+         System.out.println("Monster died");
+         }
+         if(k.getHealth() <= 0){//death sequence for knight
+         level = 0;
+         System.out.println("You Died");
+         }
+         
+         if(time%30 == 0 && (rp.getLeft()-k.getRight()) >= 50)
+         rp.setLeft(rp.getLeft()-10);
+         
+         if(time%75 == 0 && (rp.getLeft()-k.getRight()) <= 50)
+         rp.mAttack(k, rp);
+         }
       }
    }
       
