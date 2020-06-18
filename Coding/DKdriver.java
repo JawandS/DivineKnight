@@ -127,7 +127,7 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
       
       if(level == 0){
          g.setColor(Color.red);
-         g.setFont(new Font("TimesRoman", Font.BOLD, 300)); 
+         g.setFont(new Font("TimesRoman", Font.BOLD, (int)(.1*getWidth()))); 
          g.drawString("You Died",(int)(.2*getWidth()),(int)(.39*getHeight()));
       }
       
@@ -207,17 +207,17 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
       if(time%50 == 0 && (rp.getLeft()-k.getRight()) >= 25)
          rp.setLeft(rp.getLeft()-20);
          
-      if(time%75 == 0 && (rp.getLeft()-k.getRight()) <= 25)
+      if(time%100 == 0 && (rp.getLeft()-k.getRight()) <= 25)
          rp.mAttack(k, rp);
       
       if(time%150 == 0 && k.getStamina() <= 90) //increased stamina per half second
-         k.setStamina(k.getStamina() + 10);
+         k.setStamina(k.getStamina() + 5);
       
       if(time%150 == 0 && k.getMana() <= 90) //increases mana per half second
-         k.setMana(k.getMana() + 10);
+         k.setMana(k.getMana() + 5);
          
       if(time%150 == 0 && k.getHealth() <= 90) //increases health per half second
-         k.setHealth(k.getHealth() + 3);
+         k.setHealth(k.getHealth() + 1);
          
    }
            
@@ -228,8 +228,6 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
          
          repaint();
          time++;
-         
-         
          
          if(level==1){
             lvlAni(k, rp);
@@ -278,6 +276,8 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
       
 
 }
+
+
 
 
 

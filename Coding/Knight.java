@@ -38,7 +38,7 @@ public class Knight{
       boots = new Gear(g4);
       weapon = new Gear(g5);
    
-      this.health = 100;
+      this.health = 150;
       this.mana = 100;
       this.stamina = 100;
    
@@ -69,10 +69,10 @@ public class Knight{
    
       if(special == true){//Special Attacks
       
-         if(name == 1){//Bull Rush (x2 Damage)
-            int damage = 2*(k.getWeapon(2)) - m.getDefense();
+         if(name == 1){//Bull Rush (x3 Damage)
+            int damage = 3*(k.getWeapon(2)) - m.getDefense();
             if (damage > 0){
-               int stamina = k.getStamina() - 80; //stamina cost = 80
+               int stamina = k.getStamina() - 75; //stamina cost = 75
                if(stamina > 0){
                   k.setStamina(stamina);
                   m.setHealth(m.getHealth() - damage);
@@ -114,10 +114,10 @@ public class Knight{
       }
       
       if(name == 2){//Poison (reduce defense and health by 15)
-         if((k.getMana() - 50) > 0){//costs 50 mana
-            k.setMana((k.getMana() - 50));
-            m.setHealth(m.getHealth()-15);
-            m.setDefense(m.getDefense() - 15);
+         if((k.getMana() - 75) > 0){//costs 75 mana
+            k.setMana((k.getMana() - 75));
+            m.setHealth(m.getHealth()-20);
+            m.setDefense(m.getDefense() - 5);
             poison.setLeft(k.getRight());
          }
       }

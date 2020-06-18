@@ -8,7 +8,8 @@ import javax.swing.Timer;
 public class RatPack extends Monster{
 
    public RatPack(int sW, int sH){
-      super(125, 17, 10, 101, (int)(.3*sW), (int)(.55*sH), (int)(.85 * sW), (int)(.45*sH)); //MONSTERS START WITH 100
+      super(350, 23, 10, 101, (int)(.3*sW), (int)(.55*sH), (int)(.85 * sW), (int)(.45*sH)); //MONSTERS START WITH 100
+      //    health attack defense
       mImage = new ImageIcon("101.png");
    }
 }
