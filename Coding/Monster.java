@@ -10,7 +10,7 @@ public class Monster
 //other value
    private int w, h, l, t; //width and height, left and top of the knight
    int id;
-    ImageIcon mImage;
+   ImageIcon mImage;
 
 //main attributes
    int health;
@@ -80,7 +80,7 @@ public class Monster
    }
    
    public void setLeft(int i){
-   l = i;
+      l = i;
    }
 
    public ImageIcon getImage(){

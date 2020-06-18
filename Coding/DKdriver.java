@@ -29,7 +29,9 @@ public class DKdriver{
 }
 
 class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
-   
+   //Panels
+   JPanel left = new JPanel();
+   JPanel right = new JPanel();
    //necessary vars
    int time = 0;
    //Gear
@@ -54,10 +56,12 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
    private Timer timer;
    //level
    int level = 1;   
+   //standard monster
+   Monster m;
    
    public DKPanel(){
    //setup
-      timer = new Timer(7, new TimerListener());
+      timer = new Timer(10, new TimerListener());
    
       timer.start();
       setFocusable(true);             
@@ -71,19 +75,24 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
             public void keyPressed(KeyEvent event) {
                if(event.getKeyCode()==KeyEvent.VK_LEFT){//left arrow
                   if(k.getLeft() > 10)
-                  k.setLeft(k.getLeft() - 7);
+                     k.setLeft(k.getLeft() - 7);
                } 
                if(event.getKeyCode()==KeyEvent.VK_RIGHT){//right arrow
-                  if(k.getLeft() < (sW-400) && (rp.getLeft()-k.getRight()) >= 50)
-                  k.setLeft(k.getLeft() + 9);
+                  if(k.getLeft() < (sW-400) && (m.getLeft()-k.getRight()) >= 25)
+                     k.setLeft(k.getLeft() + 9);
                } 
-               if(event.getKeyCode()==KeyEvent.VK_1){
-               if(level==1 && (k.getRight()-rp.getLeft()) <= 50){
-               k.kAttack(false, 0, k, rp);
+               if(event.getKeyCode()==KeyEvent.VK_1){//Regular attack
+                  if((k.getRight()-m.getLeft()) <= 25)
+                     k.kAttack(false, 0, k, m);
                }
+               if(event.getKeyCode()==KeyEvent.VK_2){//special attack
+                  if( (k.getRight()-m.getLeft()) <= 250) 
+                     k.kAttack(true, 1, k, m);
                }
-               if(event.getKeyCode()==KeyEvent.VK_2){}
-               if(event.getKeyCode()==KeyEvent.VK_3){}   
+               if(event.getKeyCode()==KeyEvent.VK_3){//magic spell
+                  if((k.getRight()-m.getLeft()) <= 1000)
+                     k.kSpell(2, k, m);
+               }   
             }
          }
          ); 
@@ -104,41 +113,99 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
 //Paint component
    public void paintComponent(Graphics g){
       Graphics2D g2D = (Graphics2D)g;
-
-      if(level == 1){//level 1
-      //background (top)
-      Image pic; 
-      ImageIcon obj = new ImageIcon("-100.jpg");
-      pic = obj.getImage();
-      g.drawImage(pic,0, 0,sW,(int)(.6*sH), null);
-      //background (bottom)
-      Color c = new Color(0, 0, 0);
-      g.setColor(c);
-      g.fillRect(0, (int)(.45*sH), (int)(sW), (int)(.55*sH));  
-      //knight
-      k.draw(g);
-      //monster
-      rp.draw(g);
+      
+      if(level == 0){
+         g.setColor(Color.red);
+         g.setFont(new Font("TimesRoman", Font.BOLD, 300)); 
+         g.drawString("You Died",(int)(.2*getWidth()),(int)(.39*getHeight()));
       }
       
-      if(level == 2){//level 2
+      if (level == 1)
+         level(k, rp, -100, g2D);  
+      
+      if (level == 2)
+         level(k, gs,-101, g2D);  
+         
+      if (level == 3)
+         level(k, sw,-102, g2D); 
+         
+      if (level == 4)
+         level(k, el,-103, g2D); 
+         
+      if (level == 5)
+         level(k, md,-104, g2D); 
+      
+   }
+//level method
+   public void level(Knight k, Monster rp, int background, Graphics g){
       //background (top)
       Image pic; 
-      ImageIcon obj = new ImageIcon("-101.jpg");//change background
+      ImageIcon obj = new ImageIcon(""+background+".jpg");//Change number
       pic = obj.getImage();
       g.drawImage(pic,0, 0,sW,(int)(.6*sH), null);
+      //Stats (knight)
+      g.setColor(Color.white);
+      g.setFont(new Font("TimesRoman", Font.BOLD, 30)); 
+      g.drawString("Knight Stats",(int)(.05*getWidth()),(int)(.1*getHeight()));
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 25)); 
+      g.drawString("Health: " + k.getHealth(),(int)(.05*getWidth()),(int)(.15*getHeight()));
+      g.drawString("Defense: " + k.getDefense(k),(int)(.05*getWidth()),(int)(.2*getHeight()));
+      g.drawString("Mana: " + k.getMana(),(int)(.05*getWidth()),(int)(.25*getHeight()));
+      g.drawString("Stamina: " + k.getStamina(),(int)(.05*getWidth()),(int)(.3*getHeight()));
+      g.drawString("Attack: " + k.getWeapon(2),(int)(.05*getWidth()),(int)(.35*getHeight()));
+      //Stats (monster) //change monster
+      g.setFont(new Font("TimesRoman", Font.BOLD, 30)); 
+      g.drawString("Monster Stats",(int)(.85*getWidth()),(int)(.1*getHeight()));
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 25)); 
+      g.drawString("Health: " + rp.getHealth(),(int)(.85*getWidth()),(int)(.15*getHeight()));
+      g.drawString("Defense: " + rp.getDefense(),(int)(.85*getWidth()),(int)(.2*getHeight()));
+      g.drawString("Attack: " + rp.getAttack(),(int)(.85*getWidth()),(int)(.25*getHeight()));
       //background (bottom)
       Color c = new Color(0, 0, 0);
       g.setColor(c);
       g.fillRect(0, (int)(.45*sH), (int)(sW), (int)(.55*sH));  
       //knight
       k.draw(g);
-      //monster
-      rp.draw(g);//change monster
-      }
-
+      //monster (change)
+      rp.draw(g);
    }
-   
+ //level animation
+ 
+   public void lvlAni(Knight k, Monster rp){//timer animation
+         
+      if(rp.getHealth() <= 0){//death sequence for monster
+         level++;
+               //Knight reset (CHANGE TO RESET TO UPDATED VALUES)
+         k.setLeft((int)(.05 * sW));
+         k.setHealth(100);
+         k.setMana(100);
+         k.setStamina(100);
+               
+         rp.setLeft(getWidth()*2);
+         System.out.println("Monster died");
+      }
+      if(k.getHealth() <= 0){//death sequence for knight
+         this.level = 0;
+         System.out.println("You Died");
+      }
+         
+      if(time%50 == 0 && (rp.getLeft()-k.getRight()) >= 25)
+         rp.setLeft(rp.getLeft()-20);
+         
+      if(time%75 == 0 && (rp.getLeft()-k.getRight()) <= 25)
+         rp.mAttack(k, rp);
+      
+      if(time%150 == 0 && k.getStamina() <= 90) //increased stamina per half second
+         k.setStamina(k.getStamina() + 10);
+      
+      if(time%150 == 0 && k.getMana() <= 90) //increases mana per half second
+         k.setMana(k.getMana() + 10);
+         
+      if(time%150 == 0 && k.getHealth() <= 90) //increases health per half second
+         k.setHealth(k.getHealth() + 3);
+         
+   }
+           
 //animation (timer)
 
    class TimerListener implements ActionListener{
@@ -146,23 +213,31 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
          repaint();
          time++;
          
-         if(level == 1){//level 1 animations
-         
-         if(rp.getHealth() <= 0){//death sequence for monster
-         level++;
-         System.out.println("Monster died");
-         }
-         if(k.getHealth() <= 0){//death sequence for knight
-         level = 0;
-         System.out.println("You Died");
+         if(level==1){
+            lvlAni(k, rp);
+            m = rp;
          }
          
-         if(time%30 == 0 && (rp.getLeft()-k.getRight()) >= 50)
-         rp.setLeft(rp.getLeft()-10);
-         
-         if(time%75 == 0 && (rp.getLeft()-k.getRight()) <= 50)
-         rp.mAttack(k, rp);
+         if(level==2){
+            lvlAni(k, gs);
+            m = gs;
          }
+            
+         if(level==3){
+            lvlAni(k, sw);
+            m = sw;
+         }
+      
+         if(level==4){
+            lvlAni(k, el);
+            m = el;
+         }
+            
+         if(level==5){
+            lvlAni(k, md);
+            m = md;
+         }
+      
       }
    }
       

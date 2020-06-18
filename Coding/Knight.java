@@ -59,14 +59,11 @@ public class Knight{
       if (special==false){ 
          int damage = k.getWeapon(2) - m.getDefense();
       
-         if (damage > 0)
+         if (damage > 0 && k.getStamina() - 10 > 0){
             m.setHealth(m.getHealth() - damage);
-            
-         if(m.getHealth() == 0){ //DEATH SEQUENCE 
-            System.out.println("Monster died");//ANIMATE HERE
-            return;
+            k.setStamina(k.getStamina() - 10);
          }
-        
+      
       }
    
       if(special == true){//Special Attacks
@@ -247,7 +244,7 @@ public class Knight{
    }
    
    public int getRight(){
-   return l + w;
+      return l + w;
    }
    
    //ANIMATION METHODS
