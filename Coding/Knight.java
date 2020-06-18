@@ -54,7 +54,7 @@ public class Knight{
 
 //methods
 
-   public void kAttack(boolean special, int name, Knight k, Monster m){//the method for attacks, name for specific special attack
+   public void kAttack(boolean special, int name, Knight k, Monster m, Sword sword, Bull bull){//the method for attacks, name for specific special attack
    
       if (special==false){ 
          int damage = k.getWeapon(2) - m.getDefense();
@@ -62,6 +62,7 @@ public class Knight{
          if (damage > 0 && k.getStamina() - 10 > 0){
             m.setHealth(m.getHealth() - damage);
             k.setStamina(k.getStamina() - 10);
+            sword.setLeft(k.getRight());
          }
       
       }
@@ -75,11 +76,11 @@ public class Knight{
                if(stamina > 0){
                   k.setStamina(stamina);
                   m.setHealth(m.getHealth() - damage);
-                  if(m.getHealth() == 0){ //DEATH SEQUENCE 
+                 /* if(m.getHealth() == 0){ //DEATH SEQUENCE 
                      System.out.println("Monster died");//ANIMATION HERE
                      return;
-                  }
-                  //ANIMATE HERE
+                  } */
+                  bull.setLeft(k.getRight());
                }
             }
          }
@@ -103,7 +104,7 @@ public class Knight{
       }
    }
    
-   public void kSpell(int name, Knight k, Monster m){
+   public void kSpell(int name, Knight k, Monster m, Poison poison){
    
       if(name == 1){//Divine Thunder (100 points damage, ignore defense)
          if((k.getMana() - 200) > 0){//costs 200 mana
@@ -117,6 +118,7 @@ public class Knight{
             k.setMana((k.getMana() - 50));
             m.setHealth(m.getHealth()-15);
             m.setDefense(m.getDefense() - 15);
+            poison.setLeft(k.getRight());
          }
       }
    }
@@ -257,15 +259,6 @@ public class Knight{
          System.out.println("Oops, image not found (Knight class)");
       }
    
-   //timer in the gui panel
-   //al of the other pieces of items will be based of the pso of the knight
-   //create ticks in the listnere class
-   //action performed in the lsitener
-   //key listener (if left go left)
-   //get image from fro item nubmer
-   //make the backgroudn move not the knight
-   
-   //make the monster move, but when the knight is moving everyhtign else moves 
    }
    
    public ImageIcon getImage(){
@@ -275,22 +268,7 @@ public class Knight{
    public void setImage(ImageIcon mImage){
       this.mImage=mImage;
    }
-   public double getdX(){
-      return dX;
-   }
-   
-   public void setdX(double dX){
-      this.dX=dX;
-   }
-   
-   public double getdY(){
-      return dY;
-   }
-   
-   public void setdY(double dY){
-      this.dY=dY;
-   }
-   
+    
 }
 
 

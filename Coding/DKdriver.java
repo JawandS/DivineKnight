@@ -58,6 +58,11 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
    int level = 1;   
    //standard monster
    Monster m;
+   //animations
+   Sword sword = new Sword((int)(.02*sW), (int)(.2*sH), -100, (int)(.59*sH));
+   Bull bull = new Bull((int)(.1*sW), (int)(.1*sH), -1000, (int)(.59*sH));
+   Poison poison = new Poison((int)(.1*sW), (int)(.1*sH), -1000, (int)(.59*sH));
+
    
    public DKPanel(){
    //setup
@@ -82,16 +87,22 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
                      k.setLeft(k.getLeft() + 9);
                } 
                if(event.getKeyCode()==KeyEvent.VK_1){//Regular attack
-                  if((k.getRight()-m.getLeft()) <= 25)
-                     k.kAttack(false, 0, k, m);
+                  if((m.getLeft()-k.getRight()) <= 25){
+                     k.kAttack(false, 0, k, m, sword, bull);
+                     
+                  }
                }
                if(event.getKeyCode()==KeyEvent.VK_2){//special attack
-                  if( (k.getRight()-m.getLeft()) <= 250) 
-                     k.kAttack(true, 1, k, m);
+                  if( (m.getLeft()-k.getRight()) <= 250){ 
+                     k.kAttack(true, 1, k, m, sword, bull);
+                     
+                  }
                }
                if(event.getKeyCode()==KeyEvent.VK_3){//magic spell
-                  if((k.getRight()-m.getLeft()) <= 1000)
-                     k.kSpell(2, k, m);
+                  if(m.getLeft()-k.getRight() <= 1000){
+                     k.kSpell(2, k, m, poison);
+                     
+                  }
                }   
             }
          }
@@ -168,6 +179,10 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
       k.draw(g);
       //monster (change)
       rp.draw(g);
+      //anis
+      sword.draw(g);
+      bull.draw(g);
+      poison.draw(g);
    }
  //level animation
  
@@ -210,8 +225,11 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
 
    class TimerListener implements ActionListener{
       public void actionPerformed(ActionEvent e){
+         
          repaint();
          time++;
+         
+         
          
          if(level==1){
             lvlAni(k, rp);
@@ -237,12 +255,32 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
             lvlAni(k, md);
             m = md;
          }
-      
+         
+         if(sword.getLeft()>0){
+            sword.setLeft(sword.getLeft()+5);
+            if(m.getLeft()-sword.getRight() < -150)
+               sword.setLeft(-1000);
+         }
+         
+         if(bull.getLeft()>0){
+            bull.setLeft(bull.getLeft()+10);
+            if(m.getLeft()-bull.getRight() < -500)
+               bull.setLeft(-1000);
+         }
+         
+         if(poison.getLeft()>0){
+            poison.setLeft(poison.getLeft()+20);
+            if(m.getLeft()-poison.getRight() < -250)
+               poison.setLeft(-1000);
+         }
       }
    }
       
 
 }
+
+
+
 /*TEST 3
 LHelmet h = new LHelmet(); 
       LChestplate c = new LChestplate();
