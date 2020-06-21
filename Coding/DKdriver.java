@@ -55,7 +55,7 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
    //Timer                                   width             height               x                 y        
    private Timer timer;
    //level
-   int level = 1;   
+   int level = -1;   
    //standard monster
    Monster m;
    //animations
@@ -85,6 +85,10 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
                if(event.getKeyCode()==KeyEvent.VK_RIGHT){//right arrow
                   if(k.getLeft() < (sW-400) && (m.getLeft()-k.getRight()) >= 25)
                      k.setLeft(k.getLeft() + 9);
+               } 
+               if(event.getKeyCode()==KeyEvent.VK_S){//intro skip
+                  if(level < 0)
+                     level = 1;
                } 
                if(event.getKeyCode()==KeyEvent.VK_1){//Regular attack
                   if((m.getLeft()-k.getRight()) <= 25){
@@ -125,10 +129,31 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
    public void paintComponent(Graphics g){
       Graphics2D g2D = (Graphics2D)g;
       
-      if(level == -1){
-         g.setColor(Color.black);
-         g.setFont(new Font("TimesRoman", Font.PLAIN, (int)(.5*getWidth()))); 
-         g.drawString("Press TAB to skip",(int)(.1*getWidth()),(int)(.25*getHeight()));
+      //NOTE: ADD A BACKGROUND TO SLIDES -1 TO -4
+      
+      if(level == -1){//TEMPLATE / FIRST SCREEN
+      //background
+         Image pic; 
+         ImageIcon obj = new ImageIcon("-200.jpg");//Change number
+         pic = obj.getImage();
+         g.drawImage(pic,0, 0,sW,(int)(sH), null);
+      
+      //text
+         g.setColor(Color.white);
+         g.setFont(new Font("TimesRoman", Font.PLAIN, (int)(.1*getWidth()))); 
+         g.drawString("Press S to skip",(int)(.01*getWidth()),(int)(.3*getHeight())); //NOTE: IMPLEMENT THIS FEATURE USING KEY LISTENRS
+      }
+      
+      if(level == -2){
+         //EXPLANATION OF CONTROLS
+      }
+      
+      if(level == -3){
+         //EXPLANATION OF 3 INITIAL ATTACKS
+      }
+      
+      if(level == -4){
+         //CREDITS
       }
       
       if(level == 0){
@@ -136,6 +161,8 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
          g.setFont(new Font("TimesRoman", Font.BOLD, (int)(.1*getWidth()))); 
          g.drawString("You Died",(int)(.2*getWidth()),(int)(.39*getHeight()));
       }
+      
+   
       
       if (level == 1)
          level(k, rp, -100, g2D);  
@@ -235,9 +262,24 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
          repaint();
          time++;
          
+         //code for intro screens
          if(time < 200)
-         level = -1;
+            level = -1;
          
+         if(time < 500 && time >  200)
+            level = -2;
+         
+         if (time < 800 && time >  500)
+            level = -3;
+         
+         if (time < 1000 && time >  800)
+            level = -4;
+         
+         if (time == 1000)
+            level = 1;
+         
+         
+         //code for game mechs
          if(level==1){
             lvlAni(k, rp);
             m = rp;
