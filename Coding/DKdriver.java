@@ -125,6 +125,12 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
    public void paintComponent(Graphics g){
       Graphics2D g2D = (Graphics2D)g;
       
+      if(level == -1){
+         g.setColor(Color.black);
+         g.setFont(new Font("TimesRoman", Font.PLAIN, (int)(.5*getWidth()))); 
+         g.drawString("Press TAB to skip",(int)(.1*getWidth()),(int)(.25*getHeight()));
+      }
+      
       if(level == 0){
          g.setColor(Color.red);
          g.setFont(new Font("TimesRoman", Font.BOLD, (int)(.1*getWidth()))); 
@@ -228,6 +234,9 @@ class DKPanel extends JPanel implements MouseListener, MouseMotionListener{
          
          repaint();
          time++;
+         
+         if(time < 200)
+         level = -1;
          
          if(level==1){
             lvlAni(k, rp);
